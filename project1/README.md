@@ -1,18 +1,33 @@
-## Getting Started
+# Project 1 - iVote Simulator
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Simulation for a live poll of students answering a question.
 
-## Folder Structure
+## Project specifications
 
-The workspace contains two folders by default, where:
+The simulation automates the creation of a question which students answer.
+The question can have one or more correct answers. Students can be allowed to choose one, or multiple answers.
+Each student has a unique ID associated with their answer. A student's latest submission counts as their submission.
+After the submissions close, the statistics are posted.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Project implementation
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+### App
+The simulation is ran by the main class, App. App starts the simulation by creating a random instance of a question.
+App generates a random amount of students in a StudentArray, and calls Student::answerQuestion for each student.
+App passes the StudentArray to VotingService, which outputs the result of the simulation.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+### Question
+A question has a boolean multiple which states whether multiple answers can be selected or not.
+A question has a boolean array of answers, with the boolean representing if the answer is correct or not.
+Questions are 0-indexed corresponding to the array. Each index will be represented alphabetically in output, with 0=A, 1=B, etc.
+The length of the array represents how many answers the question has.
 
-## Dependency Management
+### Student
+A student has a question which it uses to answer it. All students in the simulation have the same question.
+A student has an integer array of selected answers corresponding to the indices of the question array, which is populated in answerQuestion()
+A student has a unique ID string which identifies the student. In the case the student submits multiple times, only the latest submission is counted.
+A student has a boolean isSmart which influences how likely the student is to pick one or more of the correct answers.
+A student has a function answerQuestion() which answers the question based on the question's parameters.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+### VotingService
+VotingService has a static function outputResults() which inputs an array of students and outputs the results of the simulation.
