@@ -29,14 +29,16 @@ public class App {
         }
     
         boolean isMultiple = numCorrect > 1;
-        Question q = new Question(isMultiple, correct);
+        Question question = new Question(isMultiple, correct);
 
         // Create array of students and make them answer the question
-        Student students[] = new Student[numAnswers];
-        for(int i = 0; i < numAnswers; i++) {
-            Student s = new Student(q);
+        Student students[] = new Student[numStudents];
+        for(int i = 0; i < numStudents; i++) {
+            Student s = new Student(question);
             s.answerQuestion();
             students[i] = s;
         }
+
+        VotingService.outputResults(students, question);
     }
 }

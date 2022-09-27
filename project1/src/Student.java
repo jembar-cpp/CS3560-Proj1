@@ -24,7 +24,6 @@ public class Student {
     public void answerQuestion() {
         boolean answers[] = question.getAnswers();
         int numAnswers = question.getNumAnswers();
-        System.out.println(numAnswers);
         Random r = new Random();
 
         // Likeliness to answer correctly
