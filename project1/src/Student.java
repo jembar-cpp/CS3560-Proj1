@@ -5,10 +5,11 @@
 
 import java.util.Random;
 import java.util.UUID;
+import java.util.ArrayList;
 
 public class Student {
     private Question question;
-    private int[] answers;
+    private ArrayList<Integer> choices = new ArrayList<Integer>();
     private String id;
     public boolean isSmart;
 
@@ -21,11 +22,62 @@ public class Student {
     }
 
     public void answerQuestion() {
-        // TODO
+        boolean answers[] = question.getAnswers();
+        int numAnswers = question.getNumAnswers();
+        System.out.println(numAnswers);
+        Random r = new Random();
+
+        // Likeliness to answer correctly
+        double num = Math.abs(r.nextGaussian()); // normally distributed value
+        if(isSmart) {
+            num -= 0.5; // student is likelier to answer correctly
+        }
+
+        // Only 1 correct answer
+        if(!question.isMultiple()) {
+            // Answer correctly
+            if(num < 0.9) {
+                for(int i = 0; i < numAnswers; i++) {
+                    if(answers[i]) {
+                        choices.add(i);
+                    }
+                }
+            }
+
+            // Answer randomly
+            else if (num < 1.7) {
+                choices.add(r.nextInt(numAnswers));
+            }
+
+            // else: student fell asleep, don't answer
+        }
+
+        // Multiple correct answers are hard
+        else {
+            for(int i = 0; i < numAnswers; i++) {
+                double rand = Math.abs(r.nextGaussian());
+                if(isSmart) {
+                    rand -= 0.5; // student is likelier to answer correctly
+                }
+
+                if(answers[i]) {
+                    // Answer is correct
+                    if(rand < 1) {
+                        choices.add(i); // answer correctly
+                    }
+                }
+                else {
+                    // Answer is incorrect
+                    if(rand > 1.5) {
+                        choices.add(i); // answer incorrectly
+                    }
+                }
+            }
+        }
     }
 
-    public int[] getAnswers() {
-        return answers;
+    public ArrayList<Integer> getChoices() {
+        return choices;
     }
 
     public String getID() {
