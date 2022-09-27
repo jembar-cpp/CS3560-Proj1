@@ -26,15 +26,17 @@ public class App {
         if(numCorrect == 0) {
             // Failed to generate at least 1 correct answer
             numCorrect = 1;
-            correct[r.nextInt(numAnswers+1)] = true;
         }
-        System.out.println(numStudents + ", "+numAnswers+", "+numCorrect+", "+Arrays.toString(correct));
+    
         boolean isMultiple = numCorrect > 1;
-
         Question q = new Question(isMultiple, correct);
-        for(int i = 0; i < 50; i++) {
-        Student s = new Student(q);
-        s.answerQuestion();
-        System.out.println(Arrays.toString(s.getChoices().toArray()));}
+
+        // Create array of students and make them answer the question
+        Student students[] = new Student[numAnswers];
+        for(int i = 0; i < numAnswers; i++) {
+            Student s = new Student(q);
+            s.answerQuestion();
+            students[i] = s;
+        }
     }
 }
