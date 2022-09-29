@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Student {
     private Question question;
-    private ArrayList<Integer> choices = new ArrayList<Integer>();
+    private ArrayList<Integer> choices = new ArrayList<>();
     private String id;
     public boolean isSmart;
 
